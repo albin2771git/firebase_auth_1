@@ -100,7 +100,7 @@ class _SignUpFormState extends State<SignUpForm> {
           children: [
             TextFormField(
               decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.email_outlined),
+                  prefixIcon: const Icon(Icons.email_outlined),
                   labelText: 'Email',
                   border: border),
               validator: (value) {
