@@ -38,7 +38,7 @@ class SignUpScreen extends StatelessWidget {
           ),
           Expanded(
               child: Column(
-            // mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Row(
                 children: [
@@ -61,6 +61,21 @@ class SignUpScreen extends StatelessWidget {
           ))
         ],
       ),
+    );
+  }
+
+  Container buildLogo() {
+    return Container(
+      height: 80,
+      width: 80,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          color: Colors.blue),
+      child: Center(
+          child: Text(
+        'I',
+        style: TextStyle(fontSize: 60, color: Colors.white),
+      )),
     );
   }
 }
@@ -165,7 +180,7 @@ class _SignUpFormState extends State<SignUpForm> {
               },
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Please enter some Text';
+                  return 'Please enter some name';
                 }
                 return null;
               },
@@ -200,7 +215,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: ((context) => HomeScreen())));
+                                    builder: (context) => HomeScreen()));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: Text(

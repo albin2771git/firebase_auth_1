@@ -48,8 +48,8 @@ class LoginScreen extends StatelessWidget {
                 'New Here?',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
-              GestureDetector(
-                onTap: () {
+              TextButton(
+                onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SignUpScreen()));
                 },
@@ -147,7 +147,7 @@ class _LoginFormState extends State<LoginForm> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: ((context) => HomeScreen())));
+                                builder: (context) => HomeScreen()));
                       } else {
                         ScaffoldMessenger.of(context)
                             .showSnackBar(SnackBar(content: Text(result)));
