@@ -1,93 +1,19 @@
 import 'package:firebase_auth_1/HomeScreen.dart';
 import 'package:firebase_auth_1/authentication.dart';
+import 'package:firebase_auth_1/loginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/rendering/box.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        // scrollDirection: Axis.vertical,
-        padding: EdgeInsets.all(16),
-        children: [
-          SizedBox(
-            height: 80,
-          ),
-          Column(
-            children: [
-              FlutterLogo(
-                size: 55,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          Text(
-            "Welcome",
-            style: TextStyle(fontSize: 24),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8),
-            child: SignUpForm(),
-          ),
-          Expanded(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    'Already here?',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      'Get Logged in now!',
-                      style: TextStyle(fontSize: 20, color: Colors.blue),
-                    ),
-                  )
-                ],
-              )
-            ],
-          ))
-        ],
-      ),
-    );
-  }
-
-  Container buildLogo() {
-    return Container(
-      height: 80,
-      width: 80,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Colors.blue),
-      child: Center(
-          child: Text(
-        'I',
-        style: TextStyle(fontSize: 60, color: Colors.white),
-      )),
-    );
-  }
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class SignUpForm extends StatefulWidget {
-  const SignUpForm({super.key});
-
-  @override
-  State<SignUpForm> createState() => _SignUpFormState();
-}
-
-class _SignUpFormState extends State<SignUpForm> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final formKey = GlobalKey<FormState>();
   String? email;
   String? password;
@@ -95,6 +21,7 @@ class _SignUpFormState extends State<SignUpForm> {
   bool obsecureText = false;
   bool agree = false;
   final pass = new TextEditingController();
+  final email_ctrl = new TextEditingController();
 
   var border =
       OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(100)));
@@ -103,107 +30,111 @@ class _SignUpFormState extends State<SignUpForm> {
   );
   @override
   Widget build(BuildContext context) {
-    // var border = OutlineInputBorder(
-    //     borderRadius: BorderRadius.all(Radius.circular(100)));
-    // var space = const SizedBox(
-    //   height: 10,
-    // );
-    return Form(
+    return Scaffold(
+      body: Form(
         key: formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            TextFormField(
-              decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.email_outlined),
-                  labelText: 'Email',
-                  border: border),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter some Text';
-                }
-                return null;
-              },
-              onSaved: (val) {
-                email = val;
-              },
-              keyboardType: TextInputType.emailAddress,
-            ),
-            space,
-            TextFormField(
-              controller: pass,
-              decoration: InputDecoration(
-                  labelText: 'password',
-                  prefixIcon: Icon(Icons.lock_outline),
-                  border: border,
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        obsecureText = !obsecureText;
-                      });
-                    },
-                    child: Icon(
-                        obsecureText ? Icons.visibility_off : Icons.visibility),
-                  )),
-              onSaved: (val) {
-                password = val;
-              },
-              obscureText: !obsecureText,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-            ),
-            space,
-            TextFormField(
-                decoration: InputDecoration(
-                    labelText: 'Conform Password',
-                    prefixIcon: Icon(Icons.lock_outline),
-                    border: border),
-                obscureText: true,
-                validator: (value) {
-                  if (value != pass.text) {
-                    return 'password not match';
-                  }
-                  return null;
-                }),
-            space,
-            TextFormField(
-              decoration: InputDecoration(
-                  labelText: 'full name',
-                  prefixIcon: Icon(Icons.account_circle),
-                  border: border),
-              onSaved: (val) {
-                name = val;
-              },
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter some name';
-                }
-                return null;
-              },
-            ),
-            Row(
+        child: Center(
+          child: Container(
+            width: 300,
+            height: 600,
+            color: Colors.yellow,
+            child: Column(
               children: [
-                Checkbox(
-                    value: agree,
-                    onChanged: (_) {
-                      setState(() {
-                        agree = !agree;
-                      });
-                    }),
-                Flexible(
-                  child: Text(
-                      'By creating account, i agree to Terms & conditions and privacy policy.'),
+                Padding(
+                  padding: EdgeInsets.only(top: 60),
+                  child: FlutterLogo(
+                    size: 40,
+                  ),
                 ),
-                SizedBox(
-                  height: 10,
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 10, left: 20, right: 20, bottom: 20),
+                  child: TextFormField(
+                    controller: email_ctrl,
+                    decoration: InputDecoration(labelText: "email"),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter some Text';
+                      }
+                      return null;
+                    },
+                    onSaved: (val) {
+                      email = val;
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                  child: TextFormField(
+                    controller: pass,
+                    decoration: InputDecoration(
+                        labelText: 'password',
+                        prefixIcon: Icon(Icons.lock_outline),
+                        // border: border,
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              obsecureText = !obsecureText;
+                            });
+                          },
+                          child: Icon(obsecureText
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        )),
+                    onSaved: (val) {
+                      password = val;
+                    },
+                    obscureText: !obsecureText,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                  child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Conform Password',
+                        prefixIcon: Icon(Icons.lock_outline),
+                        // border: border
+                      ),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value != pass.text) {
+                          return 'password not match';
+                        }
+                        return null;
+                      }),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'full name',
+                      prefixIcon: Icon(Icons.account_circle),
+                      //border: border
+                    ),
+                    onSaved: (val) {
+                      name = val;
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter some name';
+                      }
+                      return null;
+                    },
+                  ),
                 ),
                 SizedBox(
                   height: 50,
-                  width: double.infinity,
+                  width: 120,
                   child: ElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
@@ -232,10 +163,41 @@ class _SignUpFormState extends State<SignUpForm> {
                                 BorderRadius.all(Radius.circular(24)))),
                     child: Text('SignUp'),
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("already have an account"),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
+                        },
+                        child: Text('CLick Here'))
+                  ],
                 )
               ],
-            )
-          ],
-        ));
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container buildLogo() {
+    return Container(
+      height: 80,
+      width: 80,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          color: Colors.blue),
+      child: Center(
+          child: Text(
+        'I',
+        style: TextStyle(fontSize: 60, color: Colors.white),
+      )),
+    );
   }
 }
